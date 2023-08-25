@@ -13,7 +13,6 @@ and the Flutter guide for
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
 WatcherBuilder is the simplest state management in flutter. All you have to do
 is declare a VarWatcher, use it inside a WatcherBuilder and call notify anytime
 you want to update/rebuild its widget.
