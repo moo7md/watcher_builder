@@ -1,7 +1,7 @@
 name: watcher_builder
 description: Simplest State Management
 version: 1.0.0
-homepage:
+homepage: https://github.com/moo7md/watcher_builder/tree/master
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
