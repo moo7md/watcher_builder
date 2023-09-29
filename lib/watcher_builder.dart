@@ -32,11 +32,11 @@ class _WatcherState<T> extends State<WatcherBuilder<T>> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    widget.watch.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   widget.watch.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +76,13 @@ class _WatchersBuilderState extends State<WatchersBuilder> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    for(VarWatcher watch in widget.watchers) {
-      watch.dispose();
-    }
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   for(VarWatcher watch in widget.watchers) {
+  //     watch.dispose();
+  //   }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
