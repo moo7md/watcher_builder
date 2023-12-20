@@ -19,13 +19,14 @@ class WatcherBuilder<T> extends StatefulWidget {
 }
 
 class _WatcherState<T> extends State<WatcherBuilder<T>> {
-  void _watchFunction () {
-    if(mounted) {
+  void _watchFunction() {
+    if (mounted) {
       setState(() {
         // update ui
       });
     }
   }
+
   @override
   void initState() {
     widget.watch.addListener(_watchFunction);
@@ -54,23 +55,25 @@ class WatchersBuilder extends StatefulWidget {
   /// The list of watchers you want to watch.
   final List<VarWatcher> watchers;
   final Widget Function(BuildContext context) builder;
-  const WatchersBuilder({super.key, required this.watchers, required this.builder});
+  const WatchersBuilder(
+      {super.key, required this.watchers, required this.builder});
 
   @override
   State<WatchersBuilder> createState() => _WatchersBuilderState();
 }
 
 class _WatchersBuilderState extends State<WatchersBuilder> {
-  void _watchFunction () {
-    if(mounted) {
+  void _watchFunction() {
+    if (mounted) {
       setState(() {
         // update ui
       });
     }
   }
+
   @override
   void initState() {
-    for(VarWatcher watch in widget.watchers) {
+    for (VarWatcher watch in widget.watchers) {
       watch.addListener(_watchFunction);
     }
     super.initState();
@@ -90,28 +93,52 @@ class _WatchersBuilderState extends State<WatchersBuilder> {
   }
 }
 
-
 ///Watches the given value for any updates.
 ///
 /// Use [notify] to update the listeners.
 class VarWatcher<T> extends ChangeNotifier {
   T _value;
 
-
   VarWatcher(this._value);
 
-
   T get value => _value;
-
 
   set value(T value) {
     _value = value;
     notify();
   }
 
+  ///notifies underlying widgets to rebuild
   void notify() {
     notifyListeners();
   }
 
+  /// creates a [WatcherBuilder] from this [VarWatcher]
+  ///
+  /// [builder] is the function used to build the variable with [value] being the updated value
+  Widget build(Function(T value) builder) {
+    return WatcherBuilder(
+      watch: this,
+      builder: (_, value) => builder(value),
+    );
+  }
 
+  /// An operator to simply build the [VarWatcher]
+  Widget operator >>(Function(T value) builder) {
+    return build(builder);
+  }
+}
+
+extension WatcherWidget<T> on T {
+  VarWatcher<T> get watch => VarWatcher(this);
+}
+
+extension WatcherListBuilder on List<VarWatcher> {
+  Widget build(Function builder) {
+    return WatchersBuilder(watchers: this, builder: (_) => builder());
+  }
+
+  Widget operator >>(Function builder) {
+    return WatchersBuilder(watchers: this, builder: (_) => builder());
+  }
 }

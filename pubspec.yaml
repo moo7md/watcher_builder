@@ -1,6 +1,6 @@
 name: watcher_builder
 description: Simplest State Management
-version: 1.0.1
+version: 1.1.0
 homepage: https://github.com/moo7md/watcher_builder/tree/master
 
 environment:
